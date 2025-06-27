@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mad Tier</title>
+  <style>
+    body {
+      background-color: #111;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    /* BARRA SUPERIOR */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #1a1a1a;
+      padding: 10px 30px;
+      border-radius: 12px;
+      width: 1080px;
+      margin: 0 auto 30px auto;
+      box-shadow: 0 0 15px #000000cc;
+      user-select: none;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      position: relative;
+      z-index: 100;
+    }
+
+    .logo img {
+      height: 40px;
+      width: auto;
+      display: block;
+    }
+
+    .top-center {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-weight: 600;
+      font-size: 20px;
+      user-select: none;
+    }
+
+    .discord-menu {
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    .discord-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+    }
+
+    .discord-dropdown {
+      position: absolute;
+      top: 110%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #222222;
+      border: 1.5px solid #00aaff;
+      border-radius: 10px;
+      padding: 10px 15px;
+      box-shadow: 0 0 12px #00aaffbb;
+      display: none;
+      min-width: 220px;
+      z-index: 200;
+    }
+
+    .discord-menu:hover .discord-dropdown,
+    .discord-menu:focus-within .discord-dropdown {
+      display: block;
+    }
+
+    .discord-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 6px;
+      border-radius: 6px;
+      transition: background-color 0.2s ease;
+      color: #ccc;
+      user-select: none;
+    }
+
+    .discord-item:hover {
+      background-color: #00aaff33;
+      color: white;
+      cursor: pointer;
+    }
+
+    .discord-item img {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .search-container {
+      flex: 0 0 220px;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 8px 14px;
+      border-radius: 20px;
+      border: 1.5px solid #00aaff;
+      background-color: #1a1a1a;
+      color: white;
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+
+    .search-input::placeholder {
+      color: #777777;
+      font-style: italic;
+    }
+
+    .search-input:focus {
+      border-color: #00d4ff;
+      background-color: #222222;
+      color: white;
+    }
+
+    /* BOTONES DE MODO PvP */
+    .mode-tab-buttons {
+      display: flex;
+      justify-content: flex-start;
+      gap: 0;
+      flex-wrap: nowrap;
+      margin-bottom: 0;
+      margin-left: auto;
+      margin-right: auto;
+      width: 1080px;
+      padding-left: 0;
+      position: relative;
+      user-select: none;
+    }
+
+    .mode-tab {
+      background-color: #1a1a1a;
+      border: none;
+      padding: 8px 0;
+      width: 180px;
+      border-radius: 12px 12px 0 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      outline: none;
+      position: relative;
+      opacity: 0;
+      animation: subirDesdeAbajo 1s ease forwards;
+      box-shadow: none;
+      z-index: 2;
+    }
+
+    .mode-tab:nth-child(1) { animation-delay: 1s; }
+    .mode-tab:nth-child(2) { animation-delay: 1.15s; }
+    .mode-tab:nth-child(3) { animation-delay: 1.3s; }
+    .mode-tab:nth-child(4) { animation-delay: 1.45s; }
+    .mode-tab:nth-child(5) { animation-delay: 1.6s; }
+    .mode-tab:nth-child(6) { animation-delay: 1.75s; }
+
+    .mode-tab img {
+      width: 32px;
+      height: 32px;
+      filter: brightness(1);
+      transition: filter 0.2s ease;
+      pointer-events: none;
+    }
+
+    .mode-tab span {
+      color: #ccc;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      user-select: none;
+    }
+
+    .mode-tab:hover {
+      background-color: #2a2a2a;
+    }
+
+    .mode-tab:hover img {
+      filter: brightness(1.2);
+    }
+
+    .mode-tab:hover span {
+      color: white;
+    }
+
+    .mode-tab.active {
+      background-color: #444444cc;
+      border-bottom: 3px solid white;
+      margin-bottom: -3px;
+      box-shadow: none;
+      color: white;
+      z-index: 10;
+    }
+
+    .mode-tab.active span,
+    .mode-tab.active img {
+      color: white;
+      filter: brightness(1.2);
+    }
+
+    .linea-activa {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      background-color: #00aaff;
+      border-radius: 3px 3px 0 0;
+      transition: transform 0.3s ease, width 0.3s ease;
+      z-index: 5;
+    }
+
+    /* CUADRO GENERAL */
+    .cuadro-general {
+      background-color: #1a1a1a;
+      padding: 80px 140px 80px 80px;
+      border-radius: 24px;
+      box-shadow: 0 0 30px #00000088;
+      width: max-content;
+      min-width: 1080px;
+      margin: 0 auto 50px auto;
+      position: relative;
+      opacity: 0;
+      animation: subirDesdeAbajo 1s ease forwards;
+      border-top: none;
+      z-index: 1;
+      user-select: none;
+    }
+
+    @keyframes subirDesdeAbajo {
+      0% {
+        opacity: 0;
+        transform: translateY(80px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* TIERS */
+    .tiers-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      width: max-content;
+      margin: 0 auto;
+      flex-wrap: nowrap;
+    }
+
+    .tier-column {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+      background-color: #222;
+      padding: 15px 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #00000088;
+      width: 180px;
+      min-height: 130px;
+      user-select: none;
+    }
+
+    .tier-column h3 {
+      margin: 0 0 10px 0;
+      color: #ffd700;
+      font-size: 20px;
+    }
+
+    .tier-box {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 8px;
+      color: #ddd;
+      font-weight: bold;
+      box-shadow: 0 0 5px #00000066;
+      font-size: 14px;
+      text-align: center;
+      min-height: 40px;
+      display: flex;
+      justify-content: center;
+    }
+
+.tier-box.tier1 {
+  border-left: 8px solid #0f0f0f;
+  box-shadow: none;
+  background-color: #292929;
+}
+
+.tier-box.tier2 {
+  border-left: 8px solid #0f0f0f;
+  box-shadow: none;
+  background-color: #292929;
+}
+
+.tier-box.tier3 {
+  border-left: 8px solid #0f0f0f;
+  box-shadow: none;
+  background-color: #292929;
+}
+
+.tier-box.tier4 {
+  border-left: 8px solid #0f0f0f;
+  box-shadow: none;
+  background-color: #292929;
+}
+
+.tier-box.tier5 {
+  border-left: 8px solid #0f0f0f;
+  box-shadow: none;
+  background-color: #292929;
+}
+
+  </style>
+</head>
+<body>
+  <main>
+    <div class="top-bar">
+      <div class="logo"><img src="Imagenes/MadTiers.webp" alt="Logo" /></div>
+      <div class="top-center">
+        <div class="rankings-text">Rankings</div>
+        <div class="discord-menu">
+          <img src="Imagenes/DiscordLogo.webp" class="discord-logo" alt="Discord" />
+          <div class="discord-dropdown">
+  <a href="https://discord.gg/ggMrJ7V4NW" target="_blank" rel="noopener noreferrer" class="discord-item">
+    <img src="Imagenes/MadCity.jpg" alt="Mad TierList" />
+    <span>Mad TierList</span>
+  </a>
+  <a href="https://discord.gg/R3xgDHHKKp" target="_blank" rel="noopener noreferrer" class="discord-item">
+    <img src="Imagenes/HT1LT1.jpg" alt="HT1/LT1 Tier List" />
+    <span>HT1/LT1 Tier List</span>
+  </a>
+</div>
+
+        </div>
+      </div>
+      <div class="search-container">
+        <input type="text" class="search-input" placeholder="Search player..." />
+      </div>
+    </div>
+
+<div class="mode-tab-buttons">
+  <button class="mode-tab active" data-mode="overall">
+    <img src="icons/overall.svg" alt="Overall" style="width: 48px; height: 48px;" />
+    <span>Overall</span>
+  </button>
+  <button class="mode-tab" data-mode="mix">
+    <img src="icons/mix.svg" alt="Mix PvP" style="width: 48px; height: 48px;" />
+    <span>Mix PvP</span>
+  </button>
+  <button class="mode-tab" data-mode="normal">
+    <img src="Imagenes/Normalpvp.png" alt="Normal PvP" style="width: 48px; height: 48px;" />
+    <span>Normal PvP</span>
+  </button>
+  <button class="mode-tab" data-mode="chaleco">
+    <img src="icons/chaleco.svg" alt="Chaleco PvP" style="width: 48px; height: 48px;" />
+    <span>Chaleco PvP</span>
+  </button>
+  <button class="mode-tab" data-mode="aereo">
+    <img src="icons/aereo.svg" alt="Aéreo PvP" style="width: 48px; height: 48px;" />
+    <span>Aéreo PvP</span>
+  </button>
+  <button class="mode-tab" data-mode="auto">
+    <img src="icons/auto.svg" alt="Auto PvP" style="width: 48px; height: 48px;" />
+    <span>Auto PvP</span>
+  </button>
+  <div class="linea-activa"></div>
+</div>
+
+    <div id="modos-content">
+      <div id="overall" class="cuadro-general" style="display: block;"><h2>Overall (Ranking global)</h2></div>
+
+      <div id="mix" class="cuadro-general" style="display: none;">
+        <button id="infoButton" style="position: absolute; top: 16px; right: 24px; background: #222; border: none; color: white; padding: 6px 12px; border-radius: 8px; cursor: pointer;">Information</button>
+
+        <!-- INFO MENU -->
+        <div id="infoMenu" style="display: none; position: absolute; top: 48px; right: 24px; background-color: #222; border-radius: 12px; padding: 12px 16px; width: 340px; box-shadow: 0 0 20px #00aaff88;">
+  <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
+    <img src="https://mctiers.com/titles/combat_master.webp" style="width: 24px;">
+    <div>
+      <strong style="color: gold;">Combat Master</strong><br>
+      <small>Obtained 250+ total points.</small>
+    </div>
+  </div>
+  <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
+    <img src="https://mctiers.com/titles/combat_ace.svg" style="width: 24px;">
+    <div>
+      <strong style="color: #ff4d6d;">Combat Ace</strong><br>
+      <small>Obtained 100+ total points.</small>
+    </div>
+  </div>
+  <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
+    <img src="https://mctiers.com/titles/combat_specialist.svg" style="width: 24px;">
+    <div>
+      <strong style="color: #b19cd9;">Combat Specialist</strong><br>
+      <small>Obtained 50+ total points.</small>
+    </div>
+  </div>
+  <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
+    <img src="https://mctiers.com/titles/combat_cadet.svg" style="width: 24px;">
+    <div>
+      <strong style="color: #7a5ea6;">Combat Cadet</strong><br>
+      <small>Obtained 20+ total points.</small>
+    </div>
+  </div>
+  <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
+    <img src="https://mctiers.com/titles/combat_novice.svg" style="width: 24px;">
+    <div>
+      <strong style="color: #cccccc;">Combat Novice</strong><br>
+      <small>Obtained 10+ total points.</small>
+    </div>
+  </div>
+  <div style="display: flex; align-items: center; gap: 10px;">
+    <img src="https://mctiers.com/titles/rookie.svg" style="width: 24px;">
+    <div>
+      <strong style="color: #aaaaaa;">Rookie</strong><br>
+      <small>Starting rank for players with less than 10 points.</small>
+    </div>
+  </div>
+</div>
+
+        <!-- TIERS FUERA del infoMenu -->
+        <div class="tiers-container" style="margin-top: 60px;">
+          <div class="tier-column"><h3>Tier 1</h3><div class="tier-box tier1">S_AK</div></div>
+          <div class="tier-column"><h3>Tier 2</h3><div class="tier-box tier2">GamerX</div></div>
+          <div class="tier-column"><h3>Tier 3</h3><div class="tier-box tier3">Alpha</div></div>
+          <div class="tier-column"><h3>Tier 4</h3><div class="tier-box tier4">Delta</div></div>
+          <div class="tier-column"><h3>Tier 5</h3><div class="tier-box tier5">Player1</div></div>
+        </div>
+      </div>
+
+      <div id="normal" class="cuadro-general" style="display: none;"><h2>Normal PvP Tiers</h2></div>
+      <div id="chaleco" class="cuadro-general" style="display: none;"><h2>Chaleco PvP Tiers</h2></div>
+      <div id="aereo" class="cuadro-general" style="display: none;"><h2>Aéreo PvP Tiers</h2></div>
+      <div id="auto" class="cuadro-general" style="display: none;"><h2>Auto PvP Tiers</h2></div>
+    </div>
+  </main>
+
+  <script>
+    const tabs = document.querySelectorAll('.mode-tab');
+    const contenidos = document.querySelectorAll('.cuadro-general');
+    const lineaActiva = document.querySelector('.linea-activa');
+
+    function activarTab(tab) {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      contenidos.forEach(c => c.style.display = 'none');
+      const modo = tab.dataset.mode;
+      document.getElementById(modo).style.display = 'block';
+      const index = Array.from(tabs).indexOf(tab);
+      lineaActiva.style.width = tab.offsetWidth + 'px';
+      lineaActiva.style.transform = `translateX(${index * tab.offsetWidth}px)`;
+    }
+
+    tabs.forEach(tab => tab.addEventListener('click', () => activarTab(tab)));
+
+    window.addEventListener('load', () => {
+      const tabActivo = document.querySelector('.mode-tab.active');
+      if (tabActivo) activarTab(tabActivo);
+    });
+
+    const infoButton = document.getElementById('infoButton');
+    const infoMenu = document.getElementById('infoMenu');
+    if (infoButton && infoMenu) {
+      infoButton.addEventListener('click', () => {
+        const expanded = infoMenu.style.display === 'block';
+        infoMenu.style.display = expanded ? 'none' : 'block';
+      });
+      document.addEventListener('click', e => {
+        if (!infoMenu.contains(e.target) && !infoButton.contains(e.target)) {
+          infoMenu.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
