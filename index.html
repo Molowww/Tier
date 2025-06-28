@@ -132,11 +132,11 @@
       color: white;
     }
 
-    /* BOTONES DE MODO PvP */
+    /* BOTONES DE MODO PvP - ESTILO MODERNO */
     .mode-tab-buttons {
       display: flex;
       justify-content: flex-start;
-      gap: 0;
+      gap: 16px;
       flex-wrap: nowrap;
       margin-bottom: 0;
       margin-left: auto;
@@ -144,90 +144,79 @@
       width: 1080px;
       padding-left: 0;
       position: relative;
-      user-select: none;
+      top: 0;
+      z-index: 2;
+      /* Alineado al borde del cuadro grande */
     }
-
     .mode-tab {
-      background-color: #1a1a1a;
-      border: none;
-      padding: 8px 0;
-      width: 180px;
-      border-radius: 12px 12px 0 0;
+      background: #181d23;
+      border: 2px solid #232a36;
+      padding: 18px 0 10px 0;
+      width: 140px;
+      min-width: 120px;
+      border-radius: 16px 16px 0 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 6px;
       cursor: pointer;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      transition: background 0.3s, color 0.3s, border 0.3s;
       outline: none;
       position: relative;
-      opacity: 0;
-      animation: subirDesdeAbajo 1s ease forwards;
-      box-shadow: none;
+      box-shadow: 0 2px 8px #0002;
       z-index: 2;
+      color: #b0b0b0;
+      font-weight: 600;
+      font-size: 16px;
     }
-
-    .mode-tab:nth-child(1) { animation-delay: 1s; }
-    .mode-tab:nth-child(2) { animation-delay: 1.15s; }
-    .mode-tab:nth-child(3) { animation-delay: 1.3s; }
-    .mode-tab:nth-child(4) { animation-delay: 1.45s; }
-    .mode-tab:nth-child(5) { animation-delay: 1.6s; }
-    .mode-tab:nth-child(6) { animation-delay: 1.75s; }
-
     .mode-tab img {
       width: 32px;
       height: 32px;
-      filter: brightness(1);
-      transition: filter 0.2s ease;
+      margin-bottom: 2px;
+      filter: grayscale(0.2) brightness(1.1);
+      transition: filter 0.2s;
       pointer-events: none;
     }
-
-    .mode-tab span {
-      color: #ccc;
-      font-size: 14px;
-      font-weight: 500;
-      transition: color 0.3s ease;
-      user-select: none;
-    }
-
-    .mode-tab:hover {
-      background-color: #2a2a2a;
-    }
-
-    .mode-tab:hover img {
-      filter: brightness(1.2);
-    }
-
-    .mode-tab:hover span {
-      color: white;
-    }
-
     .mode-tab.active {
-      background-color: #444444cc;
-      border-bottom: 3px solid white;
-      margin-bottom: -3px;
-      box-shadow: none;
-      color: white;
-      z-index: 10;
+      background: #232a36;
+      color: #fff;
+      border-bottom: none;
+      z-index: 3;
     }
-
-    .mode-tab.active span,
     .mode-tab.active img {
-      color: white;
-      filter: brightness(1.2);
+      filter: none;
     }
-
+    .mode-tab:hover {
+      background: #232a36;
+      color: #fff;
+      border-color: #fff;
+    }
+    .mode-tab span {
+      color: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      user-select: none;
+      margin-top: 2px;
+    }
+    /* Línea animada blanca tipo ola */
     .linea-activa {
       position: absolute;
       bottom: 0;
       left: 0;
-      height: 3px;
-      background-color: #00aaff;
+      height: 5px;
+      background: linear-gradient(90deg, #fff 60%, #e0e0e0 100%);
       border-radius: 3px 3px 0 0;
-      transition: transform 0.3s ease, width 0.3s ease;
-      z-index: 5;
+      transition: left 0.4s cubic-bezier(.68,-0.55,.27,1.55), width 0.4s cubic-bezier(.68,-0.55,.27,1.55);
+      z-index: 3;
+      pointer-events: none;
+      /* animación de ola */
+      animation: waveMove 1.2s cubic-bezier(.68,-0.55,.27,1.55);
     }
-
+    @keyframes waveMove {
+      0% { height: 2px; border-radius: 3px; }
+      40% { height: 10px; border-radius: 10px 10px 0 0; }
+      100% { height: 5px; border-radius: 3px 3px 0 0; }
+    }
     /* CUADRO GENERAL */
     .cuadro-general {
       background-color: #1a1a1a;
@@ -260,7 +249,7 @@
     .tiers-container {
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 24px;
       width: max-content;
       margin: 0 auto;
       flex-wrap: nowrap;
@@ -269,67 +258,357 @@
     .tier-column {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      align-items: center;
-      background-color: #222;
-      padding: 15px 20px;
-      border-radius: 12px;
+      gap: 0;
+      align-items: stretch;
+      background-color: #232a36;
+      padding: 0 0 16px 0;
+      border-radius: 16px 16px 12px 12px; /* más redondeo arriba */
       box-shadow: 0 0 10px #00000088;
-      width: 180px;
-      min-height: 130px;
+      width: 240px;
+      min-height: 200px;
       user-select: none;
+      border: 2px solid #232a36;
+      overflow: hidden; /* Soluciona el borde superior sobresaliente */
     }
 
-    .tier-column h3 {
-      margin: 0 0 10px 0;
-      color: #ffd700;
-      font-size: 20px;
-    }
+    .tier-column.tier1 { border-top: 6px solid #ffb300; }
+    .tier-column.tier2 { border-top: 6px solid #b0b0b0; }
+    .tier-column.tier3 { border-top: 6px solid #a86b32; }
+    .tier-column.tier4 { border-top: 6px solid #232a36; }
+    .tier-column.tier5 { border-top: 6px solid #232a36; }
+    .tier4 .tier-title { background: #232a36; color: #fff; }
+    .tier5 .tier-title { background: #232a36; color: #fff; }
 
-    .tier-box {
-      width: 100%;
-      padding: 8px 10px;
-      border-radius: 8px;
-      color: #ddd;
-      font-weight: bold;
-      box-shadow: 0 0 5px #00000066;
-      font-size: 14px;
-      text-align: center;
-      min-height: 40px;
+    .tier-title {
       display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 22px;
+      font-weight: bold;
+      padding: 16px 0 12px 0;
+      border-radius: 12px 12px 0 0;
       justify-content: center;
+      color: white;
+    }
+    .tier1 .tier-title { background: #ffb300; color: #232a36; }
+    .tier2 .tier-title { background: #b0b0b0; color: #232a36; }
+    .tier3 .tier-title { background: #a86b32; color: #fff; }
+    .tier4 .tier-title { background: #232a36; color: #fff; }
+    .tier5 .tier-title { background: #232a36; color: #fff; }
+
+    .tier-list {
+      list-style: none;
+      margin: 0;
+      padding: 0 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
 
-.tier-box.tier1 {
-  border-left: 8px solid #0f0f0f;
-  box-shadow: none;
-  background-color: #292929;
-}
+    .tier-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #232a36;
+      border-radius: 6px;
+      padding: 6px 10px;
+      color: #e0e0e0;
+      font-size: 16px;
+      font-weight: 500;
+      box-shadow: 0 1px 2px #0002;
+      border: 1px solid #232a36;
+      transition: background 0.2s;
+    }
+    .tier-user:hover {
+      background: #2d3646;
+    }
+    .tier-user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      object-fit: cover;
+      background: #111;
+      border: 1px solid #444;
+    }
 
-.tier-box.tier2 {
-  border-left: 8px solid #0f0f0f;
-  box-shadow: none;
-  background-color: #292929;
-}
+    /* Animación de ola para los botones de modo PvP al cargar */
+    .mode-tab {
+      opacity: 0;
+      transform: translateY(40px);
+      animation: subirOla 0.6s cubic-bezier(.68,-0.55,.27,1.55) forwards;
+    }
+    .mode-tab:nth-child(1) { animation-delay: 0.1s; }
+    .mode-tab:nth-child(2) { animation-delay: 0.25s; }
+    .mode-tab:nth-child(3) { animation-delay: 0.4s; }
+    .mode-tab:nth-child(4) { animation-delay: 0.55s; }
+    .mode-tab:nth-child(5) { animation-delay: 0.7s; }
+    .mode-tab:nth-child(6) { animation-delay: 0.85s; }
+    .mode-tab:nth-child(7) { animation-delay: 1s; }
+    @keyframes subirOla {
+      0% {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      80% {
+        opacity: 1;
+        transform: translateY(-8px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-.tier-box.tier3 {
-  border-left: 8px solid #0f0f0f;
-  box-shadow: none;
-  background-color: #292929;
-}
+    /* OVERALL TABLE STYLES */
+    .overall-table-container {
+      margin: 40px auto 0 auto;
+      background: #181d23;
+      border-radius: 18px;
+      box-shadow: 0 0 24px #0008;
+      padding: 32px 24px 24px 24px;
+      width: 100%;
+      max-width: 1100px;
+    }
+    .overall-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 10px;
+      color: #fff;
+      font-size: 16px;
+      background: none;
+      table-layout: fixed;
+    }
+    .overall-table th {
+      background: #181b20;
+      color: #7faaff;
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: 0;
+      box-shadow: none;
+      border: none;
+      padding: 0 0 8px 0;
+      text-align: left;
+      height: 38px;
+    }
+    /* LIMPIEZA Y FORZADO DE FILA HORIZONTAL EN OVERALL */
+    .overall-table td {
+      background: #232a36;
+      border-radius: 14px;
+      box-shadow: 0 2px 8px #0002;
+      border: none;
+      vertical-align: middle;
+      height: 64px;
+      font-size: 16px;
+      padding: 0 12px;
+    }
+    .player-cell, .region-cell, .tiers-cell {
+      display: flex !important;
+      align-items: center !important;
+      flex-direction: row !important;
+      gap: 0 !important;
+      height: 64px !important;
+      padding: 0 12px !important;
+      background: none !important;
+      box-shadow: none !important;
+    }
+    .player-cell {
+      display: flex;
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 0 !important;
+      padding-left: 18px;
+      min-width: 220px;
+      height: 44px;
+      background: none;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.5px;
+    }
+    .player-name {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #fff;
+      margin: 0;
+      display: block;
+    }
+    .player-title {
+      font-size: 0.98rem;
+      color: #7a869a;
+      font-weight: 500;
+      margin: 0;
+      display: block;
+      white-space: nowrap;
+    }
+    .region-badge {
+      background: #c0392b;
+      color: #fff;
+      font-weight: 900;
+      font-size: 1.1em;
+      border-radius: 8px;
+      padding: 4px 18px;
+      min-width: 40px;
+      text-align: center;
+      letter-spacing: 1px;
+      box-shadow: 0 1px 4px #0002;
+      margin-left: 0;
+      text-transform: uppercase;
+    }
+    .tiers-cell {
+      gap: 10px !important;
+      padding-left: 0 !important;
+      height: 64px !important;
+    }
+    .player-info { display: contents !important; }
 
-.tier-box.tier4 {
-  border-left: 8px solid #0f0f0f;
-  box-shadow: none;
-  background-color: #292929;
-}
+    /* Nueva tabla modernizada */
+    .leaderboard-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 12px;
+      background: none;
+      margin-top: 32px;
+    }
+    .leaderboard-table th {
+      color: #444c5e;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: left;
+      padding: 0 0 8px 0;
+      background: none;
+      border: none;
+    }
+    .leaderboard-table td {
+      background: #181e29;
+      border-radius: 14px;
+      vertical-align: middle;
+      padding: 0;
+      border: none;
+      height: 72px;
+    }
+    .rank-cell {
+      position: relative;
+      width: 90px;
+      padding: 0;
+      border-radius: 14px 0 0 14px;
+      overflow: visible;
+    }
+    .rank-bg {
+      position: relative;
+      width: 90px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .rank-shimmer {
+      position: absolute;
+      left: 0; top: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+      border-radius: 14px 0 0 14px;
+    }
+    .rank-number {
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      font-size: 2rem;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 2px 2px 8px #000a;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .rank-avatar {
+      position: absolute;
+      right: 8px;
+      bottom: 0;
+      width: 48px;
+      height: 64px;
+      object-fit: contain;
+      z-index: 2;
+      border: none;
+      background: none;
+      box-shadow: none;
+      border-radius: 0;
+    }
+    .player-cell {
+      display: flex;
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 0 !important;
+      padding-left: 18px;
+      min-width: 220px;
+      height: 44px;
+      background: none;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.5px;
+    }
+    .player-name {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #fff;
+      margin: 0;
+      display: block;
+    }
+    .player-title {
+      font-size: 0.98rem;
+      color: #7a869a;
+      font-weight: 500;
+      margin: 0;
+      display: block;
+      white-space: nowrap;
+    }
+    .player-info { display: contents; }
+    .region-badge {
+      display: inline-block;
+      background: #1e293b;
+      color: #ffe082;
+      font-weight: 700;
+      font-size: 1.05em;
+      border-radius: 8px;
+      padding: 2px 10px 2px 10px;
+      min-width: 28px;
+      text-align: center;
+      letter-spacing: 0.5px;
+      box-shadow: 0 1px 4px #0002;
+      margin-left: 0;
+    }
+    .tiers-cell {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-left: 10px;
+    }
 
-.tier-box.tier5 {
-  border-left: 8px solid #0f0f0f;
-  box-shadow: none;
-  background-color: #292929;
-}
-
+    .region-header-row th.region-header-na {
+      background: #181e29 !important;
+      color: #ffe082 !important;
+      font-size: 18px !important;
+      font-weight: 900 !important;
+      text-align: center !important;
+      border: none !important;
+      box-shadow: none !important;
+      letter-spacing: 1px;
+      padding: 0 !important;
+      margin: 0 !important;
+      height: 32px !important;
+      vertical-align: middle !important;
+    }
+    .region-header-row th {
+      background: none !important;
+      border: none !important;
+      box-shadow: none !important;
+      height: 32px !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      text-align: center !important;
+      vertical-align: middle !important;
+    }
   </style>
 </head>
 <body>
@@ -387,7 +666,43 @@
 </div>
 
     <div id="modos-content">
-      <div id="overall" class="cuadro-general" style="display: block;"><h2>Overall (Ranking global)</h2></div>
+      <div id="overall" class="cuadro-general" style="display: block; background: none; box-shadow: none; padding: 0; min-width: unset;">
+        <div class="leaderboard-card">
+        <table class="leaderboard-table">
+          <thead>
+            <tr>
+              <th class="th-rank">#</th>
+              <th class="th-player">PLAYER</th>
+              <th class="th-region">REGION</th>
+              <th class="th-tiers">TIERS</th>
+            </tr>
+            <tr class="region-header-row">
+              <th></th>
+              <th></th>
+              <th class="region-header-na">NA</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+<tr class="rank-1">
+  <td class="rank-cell" style="background:#f7c948; border-radius:12px 0 0 12px; position:relative; width:70px; min-width:70px; height:40px; vertical-align:middle; display:flex; align-items:center; justify-content:center;">
+    <span class="rank-number" style="font-size:1.1rem; font-weight:900; color:#fff; position:absolute; left:10px; top:10px; text-shadow:0 2px 8px #000a;">1.</span>
+    <img class="rank-avatar" src="https://tr.rbxcdn.com/30DAY-Avatar-26CAD0FC7BC8DCE2CBDE4E4D3C98E53A-Png/352/352/Avatar/Webp/noFilter" alt="avatar" style="width:24px; height:24px; border-radius:6px; position:absolute; left:32px; top:6px; object-fit:cover; background:#222; border:1px solid #fff;" />
+  </td>
+  <td class="player-cell" style="text-align:left; padding-left:18px; min-width:220px; height:40px; vertical-align:middle; display:flex; flex-direction:column; justify-content:center;">
+    <span class="player-name" style="font-size:0.95rem; font-weight:800; color:#fff;">Marlowww</span>
+    <span class="player-title gold" style="font-size:0.85rem; color:#ffe082; font-weight:600; display:flex; align-items:center; gap:4px;">
+      <img src="https://mctiers.com/titles/combat_master.webp" alt="Combat Grandmaster" style="width:13px; height:13px; vertical-align:middle;"> Combat Grandmaster (405 points)
+    </span>
+  </td>
+  <td class="region-cell" style="text-align:center; min-width:90px; height:40px; vertical-align:middle; display:flex; align-items:center; justify-content:center;"></td>
+  <td class="tiers-cell" style="min-width:220px; height:40px; vertical-align:middle; display:flex; align-items:center; justify-content:flex-start; padding-left:48px;"></td>
+</tr>
+        <!-- Copia y adapta esta fila para los demás jugadores -->
+      </tbody>
+        </table>
+      </div>
+      </div>
 
       <div id="mix" class="cuadro-general" style="display: none;">
         <button id="infoButton" style="position: absolute; top: 16px; right: 24px; background: #222; border: none; color: white; padding: 6px 12px; border-radius: 8px; cursor: pointer;">Information</button>
@@ -440,11 +755,47 @@
 
         <!-- TIERS FUERA del infoMenu -->
         <div class="tiers-container" style="margin-top: 60px;">
-          <div class="tier-column"><h3>Tier 1</h3><div class="tier-box tier1">S_AK</div></div>
-          <div class="tier-column"><h3>Tier 2</h3><div class="tier-box tier2">GamerX</div></div>
-          <div class="tier-column"><h3>Tier 3</h3><div class="tier-box tier3">Alpha</div></div>
-          <div class="tier-column"><h3>Tier 4</h3><div class="tier-box tier4">Delta</div></div>
-          <div class="tier-column"><h3>Tier 5</h3><div class="tier-box tier5">Player1</div></div>
+          <div class="tier-column tier1">
+            <div class="tier-title">🏆 Tier 1</div>
+            <ul class="tier-list">
+              <li class="tier-user">
+                Username
+                <span style="margin-left:auto;color:#7faaff;font-size:18px;">⏫</span>
+              </li>
+              <li class="tier-user">
+                Username
+                <span style="margin-left:auto;color:#7faaff;font-size:18px;">⏫</span>
+              </li>
+            </ul>
+          </div>
+          <div class="tier-column tier2">
+            <div class="tier-title">🥈 Tier 2</div>
+            <ul class="tier-list">
+              <li class="tier-user">Username <span style="margin-left:auto;color:#7faaff;font-size:18px;">⏫</span></li>
+              <li class="tier-user">Username <span style="margin-left:auto;color:#7faaff;font-size:18px;">⏫</span></li>
+            </ul>
+          </div>
+          <div class="tier-column tier3">
+            <div class="tier-title">🥉 Tier 3</div>
+            <ul class="tier-list">
+              <li class="tier-user">Username <span style="margin-left:auto;color:#7faaff;font-size:18px;">⏫</span></li>
+              <li class="tier-user">Username <span style="margin-left:auto;color:#7faaff;font-size:18px;">⏫</span></li>
+            </ul>
+          </div>
+          <div class="tier-column tier4">
+            <div class="tier-title">Tier 4</div>
+            <ul class="tier-list">
+              <li class="tier-user">Username <span style="margin-left:auto;color:#7faaff;font-size:18px;">⏫</span></li>
+              <li class="tier-user">Username <span style="margin-left:auto;color:#7faaff;font-size:18px;">⏫</span></li>
+            </ul>
+          </div>
+          <div class="tier-column tier5">
+            <div class="tier-title">Tier 5</div>
+            <ul class="tier-list">
+              <li class="tier-user">Username <span style="margin-left:auto;color:#7faaff;font-size:18px;">⏫</span></li>
+              <li class="tier-user">Username <span style="margin-left:auto;color:#7faaff;font-size:18px;">⏫</span></li>
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -459,6 +810,15 @@
     const tabs = document.querySelectorAll('.mode-tab');
     const contenidos = document.querySelectorAll('.cuadro-general');
     const lineaActiva = document.querySelector('.linea-activa');
+    const tabContainer = document.querySelector('.mode-tab-buttons');
+
+    function posicionarLinea(tab) {
+      const tabRect = tab.getBoundingClientRect();
+      const containerRect = tabContainer.getBoundingClientRect();
+      const left = tabRect.left - containerRect.left;
+      lineaActiva.style.width = tabRect.width + 'px';
+      lineaActiva.style.transform = `translateX(${left}px)`;
+    }
 
     function activarTab(tab) {
       tabs.forEach(t => t.classList.remove('active'));
@@ -466,9 +826,7 @@
       contenidos.forEach(c => c.style.display = 'none');
       const modo = tab.dataset.mode;
       document.getElementById(modo).style.display = 'block';
-      const index = Array.from(tabs).indexOf(tab);
-      lineaActiva.style.width = tab.offsetWidth + 'px';
-      lineaActiva.style.transform = `translateX(${index * tab.offsetWidth}px)`;
+      posicionarLinea(tab);
     }
 
     tabs.forEach(tab => tab.addEventListener('click', () => activarTab(tab)));
@@ -476,6 +834,10 @@
     window.addEventListener('load', () => {
       const tabActivo = document.querySelector('.mode-tab.active');
       if (tabActivo) activarTab(tabActivo);
+    });
+    window.addEventListener('resize', () => {
+      const tabActivo = document.querySelector('.mode-tab.active');
+      if (tabActivo) posicionarLinea(tabActivo);
     });
 
     const infoButton = document.getElementById('infoButton');
