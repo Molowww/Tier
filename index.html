@@ -38,98 +38,122 @@
     }
 
     .top-center {
+      flex: 1;
       display: flex;
       align-items: center;
-      gap: 24px;
-      font-weight: 600;
-      font-size: 20px;
-      user-select: none;
+      justify-content: center;
+      gap: 32px;
+      font-weight: 500;
+      font-size: 17px;
+      color: #bfc9d8;
+      position: relative;
+    }
+
+    .nav-hover-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      pointer-events: none;
+      opacity: 0;
+      z-index: -1;
     }
 
     .discord-menu {
       position: relative;
-      cursor: pointer;
       display: flex;
       align-items: center;
+      gap: 6px;
+      font-size: 17px;
+      font-weight: 500;
+      color: #bfc9d8;
+      cursor: pointer;
+      outline: none;
     }
-
-    .discord-logo {
-      width: 32px;
-      height: 32px;
-      border-radius: 6px;
+    .discord-menu.open .discord-dropdown {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+      transition: opacity 0.22s cubic-bezier(.68,-0.55,.27,1.55), transform 0.22s cubic-bezier(.68,-0.55,.27,1.55);
     }
-
     .discord-dropdown {
+      opacity: 0;
+      pointer-events: none;
       position: absolute;
       top: 110%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #222222;
-      border: 1.5px solid #00aaff;
-      border-radius: 10px;
-      padding: 10px 15px;
-      box-shadow: 0 0 12px #00aaffbb;
-      display: none;
+      right: 0;
+      background-color: #232a36;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      z-index: 10;
       min-width: 220px;
-      z-index: 200;
-    }
-
-    .discord-menu:hover .discord-dropdown,
-    .discord-menu:focus-within .discord-dropdown {
       display: block;
+      transform: translateY(-10px);
+      transition: opacity 0.22s cubic-bezier(.68,-0.55,.27,1.55), transform 0.22s cubic-bezier(.68,-0.55,.27,1.55);
     }
-
+    .discord-menu.open .discord-chevron {
+      transform: rotate(180deg);
+    }
+    .discord-chevron {
+      transition: transform 0.22s cubic-bezier(.68,-0.55,.27,1.55);
+    }
     .discord-item {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 8px 6px;
+      padding: 12px 18px;
+      color: #e0e0e0;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
       border-radius: 6px;
-      transition: background-color 0.2s ease;
-      color: #ccc;
-      user-select: none;
+      gap: 12px;
+      transition: background 0.18s;
     }
-
-    .discord-item:hover {
-      background-color: #00aaff33;
-      color: white;
-      cursor: pointer;
+    .discord-item:hover, .discord-item:focus {
+      background-color: #2d3646;
+      color: #fff;
+      outline: none;
     }
-
     .discord-item img {
       width: 32px;
       height: 32px;
       border-radius: 6px;
+      margin-right: 8px;
       object-fit: cover;
-      flex-shrink: 0;
+      background: #181d23;
+      border: 1px solid #232a36;
     }
 
     .search-container {
-      flex: 0 0 220px;
+      display: flex;
+      align-items: center;
       position: relative;
+      margin-left: auto;
     }
 
     .search-input {
-      width: 100%;
-      padding: 8px 14px;
-      border-radius: 20px;
-      border: 1.5px solid #00aaff;
-      background-color: #1a1a1a;
-      color: white;
-      font-size: 16px;
+      background: #181d23;
+      border: 2px solid #232a36;
+      border-radius: 12px;
+      padding: 6px 16px;
+      height: 32px;
+      width: 250px;
+      color: #fff;
+      font-size: 15px;
+      transition: border 0.3s;
       outline: none;
-      transition: border-color 0.3s ease, background-color 0.3s ease;
     }
 
     .search-input::placeholder {
-      color: #777777;
-      font-style: italic;
+      color: #7a869a;
+      opacity: 1;
     }
 
     .search-input:focus {
-      border-color: #00d4ff;
-      background-color: #222222;
-      color: white;
+      border-color: #00aaff;
     }
 
     /* BOTONES DE MODO PvP - ESTILO MODERNO */
@@ -609,33 +633,190 @@
       text-align: center !important;
       vertical-align: middle !important;
     }
+
+    /* Estilos para el menú de información modernizado */
+    .info-menu-modern {
+      background-color: #222;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+      position: absolute;
+      top: 48px;
+      right: 24px;
+      width: 340px;
+      z-index: 200;
+    }
+    .info-tabs {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .info-tab {
+      background: #181d23;
+      color: #bfc9d8;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .info-tab.active {
+      background: #00aaff;
+      color: #fff;
+    }
+    .info-tab.disabled {
+      background: #333;
+      color: #777;
+      cursor: not-allowed;
+    }
+    .info-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .info-title-icon {
+      font-size: 20px;
+      color: #00aaff;
+    }
+    .info-link {
+      color: #00aaff;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .info-link:hover {
+      color: #007acc;
+    }
+    .info-titles-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .info-title-item {
+      background: #2d3646;
+      border-radius: 8px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: background 0.3s;
+    }
+    .info-title-item:hover {
+      background: #3a445e;
+    }
+    .info-title-item.grandmaster {
+      background: linear-gradient(90deg, #ffb300 0%, #ffb300 100%);
+    }
+    .info-title-item.master {
+      background: linear-gradient(90deg, #b0b0b0 0%, #b0b0b0 100%);
+    }
+    .info-title-item.ace {
+      background: linear-gradient(90deg, #ff4d6d 0%, #ff4d6d 100%);
+    }
+    .info-title-item.specialist {
+      background: linear-gradient(90deg, #b19cd9 0%, #b19cd9 100%);
+    }
+    .info-title-item.cadet {
+      background: linear-gradient(90deg, #7a5ea6 0%, #7a5ea6 100%);
+    }
+    .info-title-item.novice {
+      background: linear-gradient(90deg, #cccccc 0%, #cccccc 100%);
+    }
+    .info-title-item.rookie {
+      background: linear-gradient(90deg, #aaaaaa 0%, #aaaaaa 100%);
+    }
+
+    /* Nueva lista simple para el menú de información */
+    .info-titles-list-simple {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .info-title-item-simple {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      background: none;
+      padding: 0;
+      margin: 0;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+    .info-title-item-simple:hover {
+      background: #333;
+    }
+    .info-title-icon-simple {
+      font-size: 18px;
+      color: #00aaff;
+      margin-right: 8px;
+      line-height: 1;
+    }
+    .info-title-name-simple {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      margin: 0;
+    }
+    .info-title-desc-simple {
+      font-size: 13px;
+      color: #b0b0b0;
+      margin: 0;
+    }
   </style>
 </head>
 <body>
   <main>
     <div class="top-bar">
       <div class="logo"><img src="Imagenes/MadTiers.webp" alt="Logo" /></div>
-      <div class="top-center">
-        <div class="rankings-text">Rankings</div>
-        <div class="discord-menu">
-          <img src="Imagenes/DiscordLogo.webp" class="discord-logo" alt="Discord" />
-          <div class="discord-dropdown">
-  <a href="https://discord.gg/ggMrJ7V4NW" target="_blank" rel="noopener noreferrer" class="discord-item">
-    <img src="Imagenes/MadCity.jpg" alt="Mad TierList" />
-    <span>Mad TierList</span>
-  </a>
-  <a href="https://discord.gg/R3xgDHHKKp" target="_blank" rel="noopener noreferrer" class="discord-item">
-    <img src="Imagenes/HT1LT1.jpg" alt="HT1/LT1 Tier List" />
-    <span>HT1/LT1 Tier List</span>
-  </a>
-</div>
-
+      <div class="top-center" style="gap: 32px; justify-content: center; flex: 1; position: relative;">
+        <div class="nav-hover-bg" id="navHoverBg"></div>
+        <div class="rankings-text" id="navRankings"
+          style="display: flex; align-items: center; gap: 6px; font-size: 17px; font-weight: 500; color: #bfc9d8; cursor:pointer;"
+          tabindex="0">
+          <img src="https://mctiers.com/nav_icons/rankings.svg" alt="Rankings" class="rankings-logo" style="width: 24px; height: 24px; margin-right: 2px;" />
+          Rankings
+        </div>
+        <div class="discord-menu" id="navDiscords" tabindex="0"
+          style="display: flex; align-items: center; gap: 6px; font-size: 17px; font-weight: 500; color: #bfc9d8; position: relative;">
+          <img src="https://mctiers.com/nav_icons/discord.svg" class="discord-logo" alt="Discord" style="width: 24px; height: 24px; margin-right: 2px;" />
+          Discords
+          <svg class="discord-chevron" id="discordChevron" width="18" height="18" viewBox="0 0 20 20" style="margin-left: 2px; margin-bottom: 1px;" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 8L10 12L14 8" stroke="#bfc9d8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="discord-dropdown no-glow" tabindex="-1">
+            <a href="https://discord.gg/ggMrJ7V4NW" target="_blank" rel="noopener noreferrer" class="discord-item">
+              <img src="Imagenes/MadCity.jpg" alt="Mad TierList" />
+              <span>Mad TierList</span>
+            </a>
+            <a href="https://discord.gg/R3xgDHHKKp" target="_blank" rel="noopener noreferrer" class="discord-item">
+              <img src="Imagenes/HT1LT1.jpg" alt="HT1/LT1 Tier List" />
+              <span>HT1/LT1 Tier List</span>
+            </a>
+          </div>
         </div>
       </div>
-      <div class="search-container">
-        <input type="text" class="search-input" placeholder="Search player..." />
+      <div class="search-container" style="margin-left: auto;">
+        <input type="text" class="search-input" placeholder="Search player..." style="height: 32px; font-size: 15px; padding: 6px 16px;" />
       </div>
     </div>
+
+    <script>
+      function activarTabPorNombre(nombre) {
+        const tab = document.querySelector('.mode-tab[data-mode="' + nombre + '"]');
+        if (tab) tab.click();
+      }
+    </script>
 
 <div class="mode-tab-buttons">
   <button class="mode-tab active" data-mode="overall">
@@ -708,49 +889,45 @@
         <button id="infoButton" style="position: absolute; top: 16px; right: 24px; background: #222; border: none; color: white; padding: 6px 12px; border-radius: 8px; cursor: pointer;">Information</button>
 
         <!-- INFO MENU -->
-        <div id="infoMenu" style="display: none; position: absolute; top: 48px; right: 24px; background-color: #222; border-radius: 12px; padding: 12px 16px; width: 340px; box-shadow: 0 0 20px #00aaff88;">
-  <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
-    <img src="https://mctiers.com/titles/combat_master.webp" style="width: 24px;">
-    <div>
-      <strong style="color: gold;">Combat Master</strong><br>
-      <small>Obtained 250+ total points.</small>
-    </div>
+        <div id="infoMenu" class="info-menu-modern" style="display: none; min-width: 340px; max-width: 370px; background: #181e29; box-shadow: 0 4px 32px #000a; border-radius: 16px; padding: 20px 24px 18px 24px;">
+  <div class="info-tabs">
+    <button class="info-tab active">Titles</button>
+    <button class="info-tab" disabled>Points</button>
+    <button class="info-tab" disabled>Tier Test</button>
+    <button class="info-tab" disabled>Testing Kit</button>
   </div>
-  <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
-    <img src="https://mctiers.com/titles/combat_ace.svg" style="width: 24px;">
-    <div>
-      <strong style="color: #ff4d6d;">Combat Ace</strong><br>
-      <small>Obtained 100+ total points.</small>
+  <div class="info-titles-list-simple">
+      <div class="info-title-item-simple master">
+        <img class="info-title-emoji" src="Imagenes/combat_master.webp" alt="Combat Master" />
+        <span class="info-title-name-simple">Combat Master</span>
+        <span class="info-title-desc-simple">Obtained 250+ total points.</span>
+      </div>
+      <div class="info-title-item-simple ace">
+        <img class="info-title-emoji" src="Imagenes/combat_ace.svg" alt="Combat Ace" />
+        <span class="info-title-name-simple">Combat Ace</span>
+        <span class="info-title-desc-simple">Obtained 100+ total points.</span>
+      </div>
+      <div class="info-title-item-simple specialist">
+        <img class="info-title-emoji" src="Imagenes/combat_specialist.svg" alt="Combat Specialist" />
+        <span class="info-title-name-simple">Combat Specialist</span>
+        <span class="info-title-desc-simple">Obtained 50+ total points.</span>
+      </div>
+      <div class="info-title-item-simple cadet">
+        <img class="info-title-emoji" src="Imagenes/combat_cadet.svg" alt="Combat Cadet" />
+        <span class="info-title-name-simple">Combat Cadet</span>
+        <span class="info-title-desc-simple">Obtained 20+ total points.</span>
+      </div>
+      <div class="info-title-item-simple novice">
+        <img class="info-title-emoji" src="Imagenes/combat_novice.svg" alt="Combat Novice" />
+        <span class="info-title-name-simple">Combat Novice</span>
+        <span class="info-title-desc-simple">Obtained 10+ total points.</span>
+      </div>
+      <div class="info-title-item-simple rookie">
+        <img class="info-title-emoji" src="Imagenes/rookie.svg" alt="Rookie" />
+        <span class="info-title-name-simple">Rookie</span>
+        <span class="info-title-desc-simple">Starting rank for players with less than 10 points.</span>
+      </div>
     </div>
-  </div>
-  <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
-    <img src="https://mctiers.com/titles/combat_specialist.svg" style="width: 24px;">
-    <div>
-      <strong style="color: #b19cd9;">Combat Specialist</strong><br>
-      <small>Obtained 50+ total points.</small>
-    </div>
-  </div>
-  <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
-    <img src="https://mctiers.com/titles/combat_cadet.svg" style="width: 24px;">
-    <div>
-      <strong style="color: #7a5ea6;">Combat Cadet</strong><br>
-      <small>Obtained 20+ total points.</small>
-    </div>
-  </div>
-  <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
-    <img src="https://mctiers.com/titles/combat_novice.svg" style="width: 24px;">
-    <div>
-      <strong style="color: #cccccc;">Combat Novice</strong><br>
-      <small>Obtained 10+ total points.</small>
-    </div>
-  </div>
-  <div style="display: flex; align-items: center; gap: 10px;">
-    <img src="https://mctiers.com/titles/rookie.svg" style="width: 24px;">
-    <div>
-      <strong style="color: #aaaaaa;">Rookie</strong><br>
-      <small>Starting rank for players with less than 10 points.</small>
-    </div>
-  </div>
 </div>
 
         <!-- TIERS FUERA del infoMenu -->
@@ -853,6 +1030,95 @@
         }
       });
     }
+
+    const navHoverBg = document.getElementById('navHoverBg');
+    const navRankings = document.getElementById('navRankings');
+    const navDiscords = document.getElementById('navDiscords');
+    const discordChevron = document.getElementById('discordChevron');
+    const discordDropdown = navDiscords.querySelector('.discord-dropdown');
+    const topCenter = document.querySelector('.top-center');
+
+    function moveNavBgTo(target) {
+      const parentRect = topCenter.getBoundingClientRect();
+      const rect = target.getBoundingClientRect();
+      navHoverBg.style.left = (rect.left - parentRect.left) + 'px';
+      navHoverBg.style.width = rect.width + 'px';
+      navHoverBg.style.opacity = '1';
+    }
+
+    function hideNavBg() {
+      navHoverBg.style.opacity = '0';
+    }
+
+    navRankings.addEventListener('mouseenter', () => moveNavBgTo(navRankings));
+    navDiscords.addEventListener('mouseenter', () => moveNavBgTo(navDiscords));
+    navRankings.addEventListener('focus', () => moveNavBgTo(navRankings));
+    navDiscords.addEventListener('focus', () => moveNavBgTo(navDiscords));
+
+    topCenter.addEventListener('mouseleave', hideNavBg);
+    navRankings.addEventListener('mouseleave', (e) => {
+      if (!navDiscords.matches(':hover')) hideNavBg();
+    });
+    navDiscords.addEventListener('mouseleave', (e) => {
+      if (!navRankings.matches(':hover')) hideNavBg();
+    });
+
+    // --- Discords Dropdown Logic ---
+    let discordMenuTimeout = null;
+
+    function setDiscordMenu(open) {
+      if (open) {
+        navDiscords.classList.add('open');
+        discordDropdown.style.display = 'block';
+        discordChevron.style.transform = 'rotate(180deg)';
+      } else {
+        navDiscords.classList.remove('open');
+        discordDropdown.style.display = 'none';
+        discordChevron.style.transform = '';
+      }
+    }
+
+    function openDiscordMenu() {
+      clearTimeout(discordMenuTimeout);
+      setDiscordMenu(true);
+    }
+    function closeDiscordMenu() {
+      discordMenuTimeout = setTimeout(() => setDiscordMenu(false), 120);
+    }
+
+    navDiscords.addEventListener('mouseenter', openDiscordMenu);
+    navDiscords.addEventListener('mouseleave', closeDiscordMenu);
+    discordDropdown.addEventListener('mouseenter', openDiscordMenu);
+    discordDropdown.addEventListener('mouseleave', closeDiscordMenu);
+    navDiscords.addEventListener('focus', openDiscordMenu);
+    navDiscords.addEventListener('blur', closeDiscordMenu);
+
+    // Accesibilidad: cerrar con Escape
+    navDiscords.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        setDiscordMenu(false);
+        navDiscords.blur();
+      }
+    });
+    // Evitar cierre prematuro al hacer click en los links
+    [...discordDropdown.querySelectorAll('a')].forEach(link => {
+      link.addEventListener('mousedown', () => {
+        clearTimeout(discordMenuTimeout);
+      });
+      link.addEventListener('click', () => {
+        setDiscordMenu(false);
+      });
+    });
+
+    // Rankings tab click/focus
+    navRankings.addEventListener('click', function() {
+  activarTabPorNombre('overall');
+});
+navRankings.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' || e.key === ' ') {
+    activarTabPorNombre('overall');
+  }
+});
   </script>
 </body>
 </html>

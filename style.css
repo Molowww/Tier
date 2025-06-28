@@ -13,7 +13,7 @@ body {
   align-items: center;
   justify-content: space-between;
   background-color: #1a1a1a;
-  padding: 10px 20px;
+  padding: 6px 24px;
   border-radius: 12px;
   width: 1080px;
   margin: 0 auto 30px auto;
@@ -23,6 +23,7 @@ body {
   color: white;
   position: relative;
   z-index: 100;
+  min-height: 44px;
 }
 
 .logo img {
@@ -32,93 +33,163 @@ body {
 }
 
 .top-center {
+  flex: 1;
   display: flex;
   align-items: center;
-  gap: 24px;
-  font-weight: 600;
-  font-size: 20px;
-  user-select: none;
+  justify-content: center;
+  gap: 32px;
+  height: 44px;
+  position: relative;
 }
 
-/* Discord */
-.discord-menu {
-  position: relative;
-  cursor: pointer;
+.nav-hover-bg {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 36px;
+  width: 140px;
+  background: #232a36;
+  border-radius: 12px;
+  transform: translateY(-50%);
+  z-index: 0;
+  transition: left 0.25s cubic-bezier(.68,-0.55,.27,1.55), width 0.25s cubic-bezier(.68,-0.55,.27,1.55);
+  pointer-events: none;
+  opacity: 1;
+}
+
+.rankings-text, .discord-menu {
   display: flex;
   align-items: center;
+  gap: 6px;
+  font-size: 17px;
+  font-weight: 500;
+  color: #bfc9d8;
+  height: 44px;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  padding: 0 18px;
+  border-radius: 12px;
+  transition: color 0.18s;
+}
+
+.rankings-text:hover, .discord-menu:hover, .rankings-text:focus, .discord-menu:focus {
+  color: #fff;
 }
 
 .discord-logo {
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
+  width: 24px !important;
+  height: 24px !important;
+  margin-right: 2px;
+  display: inline-block;
+}
+
+.discord-menu svg {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 2px;
+  margin-bottom: 1px;
+}
+
+.discord-chevron {
+  display: inline-block;
+  transition: transform 0.25s cubic-bezier(.68,-0.55,.27,1.55);
+}
+
+.discord-menu.open .discord-chevron {
+  transform: rotate(180deg);
 }
 
 .discord-dropdown {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 32px;
+  opacity: 0;
+  pointer-events: none;
   position: absolute;
   top: 110%;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #222;
-  border: 1.5px solid #00aaff;
-  border-radius: 10px;
-  padding: 10px 15px;
-  box-shadow: 0 0 12px #00aaffbb;
-  display: none;
-  min-width: 220px;
-  z-index: 200;
+  left: 0;
+  background-color: #232a36;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px #000a;
+  z-index: 10;
+  min-width: 320px;
+  padding: 18px 24px 18px 24px;
+  transition: opacity 0.18s, transform 0.18s;
+  transform: translateY(10px);
 }
 
-.discord-menu:hover .discord-dropdown,
-.discord-menu:focus-within .discord-dropdown {
-  display: block;
+.discord-menu.open .discord-dropdown {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  display: grid;
+}
+
+.discord-menu:not(.open) .discord-dropdown {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  display: grid;
 }
 
 .discord-item {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 8px 6px;
-  border-radius: 6px;
-  color: #ccc;
+  padding: 8px 10px;
+  color: #e0e0e0;
+  text-decoration: none;
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: 500;
+  background: none;
+  transition: background 0.18s, color 0.18s;
 }
 
 .discord-item:hover {
-  background-color: #00aaff33;
-  color: white;
+  background-color: #2d3646;
+  color: #fff;
 }
 
 .discord-item img {
   width: 32px;
   height: 32px;
-  border-radius: 6px;
+  border-radius: 8px;
+  margin-right: 0;
+  background: #181d23;
+  box-shadow: 0 2px 8px #0002;
 }
 
 /* Search */
 .search-container {
-  flex: 0 0 220px;
+  display: flex;
+  align-items: center;
   position: relative;
+  margin-left: auto;
+  height: 44px;
 }
 
 .search-input {
-  width: 100%;
-  padding: 8px 14px;
-  border-radius: 20px;
-  border: 1.5px solid #00aaff;
-  background-color: #1a1a1a;
-  color: white;
-  font-size: 16px;
+  background: #181d23;
+  border: 2px solid #232a36;
+  border-radius: 12px;
+  padding: 6px 16px;
+  width: 220px;
+  color: #fff;
+  font-size: 15px;
+  height: 32px;
+  transition: border 0.3s;
   outline: none;
 }
 
 .search-input::placeholder {
-  color: #777;
-  font-style: italic;
+  color: #7a869a;
+  opacity: 1;
 }
 
 .search-input:focus {
-  border-color: #00d4ff;
-  background-color: #222;
+  border-color: #00aaff;
 }
 
 /* Botones */
@@ -306,6 +377,102 @@ body {
 #infoMenu div[role='menuitem'] span:nth-child(4),
 #infoMenu div[role='menuitem'] span:nth-child(5) { color: #7a5ea6; }
 
+.info-menu-modern {
+  background: #181e29;
+  border-radius: 16px;
+  box-shadow: 0 4px 32px #000a;
+  padding: 20px 24px 18px 24px;
+  min-width: 340px;
+  max-width: 370px;
+  color: #e0e0e0;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 15px;
+  position: absolute;
+  top: 48px;
+  right: 24px;
+  z-index: 100;
+}
+.info-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 14px;
+  background: #232a36;
+  border-radius: 10px;
+  padding: 2px 4px;
+}
+.info-tab {
+  background: none;
+  border: none;
+  color: #bfc9d8;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 7px 18px 7px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  outline: none;
+}
+.info-tab.active {
+  background: #181e29;
+  color: #fff;
+  box-shadow: 0 0 0 1.5px #7faaff;
+}
+.info-tab:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.info-content {
+  padding-top: 2px;
+}
+.info-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #bfc9d8;
+}
+.info-link {
+  color: #7faaff;
+  text-decoration: underline;
+  font-weight: 500;
+}
+.info-titles-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.info-title-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 0 7px 0;
+  border-radius: 8px;
+  font-size: 15px;
+}
+.info-title-icon {
+  font-size: 18px;
+  margin-right: 2px;
+}
+.info-title-name {
+  font-weight: 700;
+  min-width: 140px;
+  display: inline-block;
+}
+.info-title-desc {
+  color: #bfc9d8;
+  font-size: 13px;
+  font-weight: 400;
+  margin-left: 6px;
+}
+.info-title-item.grandmaster .info-title-name { color: #ffe082; }
+.info-title-item.master .info-title-name { color: #ffe082; }
+.info-title-item.ace .info-title-name { color: #ff4d6d; }
+.info-title-item.specialist .info-title-name { color: #b19cd9; }
+.info-title-item.cadet .info-title-name { color: #7a5ea6; }
+.info-title-item.novice .info-title-name { color: #cccccc; }
+.info-title-item.rookie .info-title-name { color: #aaaaaa; }
 /* --- LEADERBOARD MODERNO --- */
 .leaderboard-table {
   width: 100%;
@@ -504,12 +671,82 @@ body {
   background: transparent;
 }
 
+.top-bar, .top-center, .search-container, .discord-menu { display: none !important; }
+
+.top-bar-mctiers {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #181e23;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px #0006;
+  padding: 16px 32px;
+  width: 98%;
+  max-width: 1320px;
+  margin: 28px auto 32px auto;
+  min-height: 60px;
+  position: relative;
+  z-index: 100;
+}
+.logo-mctiers img {
+  height: 38px;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 2px 8px #0008);
+}
+.rankings-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+.rankings-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #b0cfff;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.rankings-link:hover {
+  color: #fff;
+}
+.trophy-icon {
+  width: 26px;
+  height: 26px;
+  margin-right: 2px;
+  vertical-align: middle;
+  filter: drop-shadow(0 1px 2px #0008);
+}
+.discord-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.discord-logo-mctiers {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #232a36;
+  box-shadow: 0 1px 6px #0004;
+  transition: filter 0.2s;
+}
+.discord-logo-mctiers:hover {
+  filter: brightness(1.2) drop-shadow(0 0 8px #00aaffcc);
+}
 @media (max-width: 1200px) {
-  .cuadro-general, .mode-tab-buttons, .top-bar {
-    min-width: 100vw;
-    width: 100vw;
-    padding-left: 0;
-    padding-right: 0;
+  .top-bar {
+    width: 98vw;
+    min-width: unset;
+    padding: 8px 8px;
+  }
+  .search-container {
+    flex: 0 0 120px;
   }
   .leaderboard-table {
     font-size: 14px;
@@ -537,4 +774,96 @@ body {
   .tiers-cell {
     padding-left: 16px;
   }
+  .top-bar-mctiers {
+    padding: 8px 6px;
+    min-height: 44px;
+  }
+  .logo-mctiers img {
+    height: 28px;
+  }
+  .trophy-icon {
+    width: 20px;
+    height: 20px;
+  }
+  .discord-logo-mctiers {
+    width: 28px;
+    height: 28px;
+  }
+  .rankings-link {
+    font-size: 1rem;
+  }
+}
+
+/* Nuevos estilos para la lista simple de títulos */
+.info-titles-list-simple {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.info-title-item-simple {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: none;
+  padding: 0;
+  margin: 0;
+  border-radius: 4px;
+  transition: background 0.3s;
+  min-height: 20px;
+  gap: 6px;
+}
+.info-title-item-simple:hover {
+  background: #232a36;
+}
+.info-title-emoji {
+  width: 13px !important;
+  height: 13px !important;
+  max-width: 13px !important;
+  max-height: 13px !important;
+  min-width: 13px !important;
+  min-height: 13px !important;
+  object-fit: contain !important;
+  margin-right: 7px;
+  margin-left: 2px;
+  vertical-align: middle !important;
+  display: inline-block !important;
+  flex-shrink: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0 !important;
+}
+.info-title-name-simple {
+  font-size: 15px !important;
+  font-weight: 700;
+  color: #ffe082;
+  margin: 0 8px 0 0;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1.1;
+}
+.info-title-item-simple.ace .info-title-name-simple {
+  color: #ff4d6d;
+}
+.info-title-item-simple.specialist .info-title-name-simple {
+  color: #b19cd9;
+}
+.info-title-item-simple.cadet .info-title-name-simple {
+  color: #7faaff;
+}
+.info-title-item-simple.novice .info-title-name-simple {
+  color: #7faaff;
+}
+.info-title-item-simple.rookie .info-title-name-simple {
+  color: #b0b0b0;
+}
+.info-title-desc-simple {
+  font-size: 13px !important;
+  color: #b0b0b0;
+  margin: 0 0 0 2px;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1.1;
 }
